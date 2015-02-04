@@ -56,7 +56,7 @@
             [sender setBackgroundImage:[UIImage imageNamed:@"cardfront"] forState:UIControlStateNormal];
             [sender setTitle:nextCard.contents forState:UIControlStateNormal];
         } else {
-            // TODO: Make card unclickable? Start deck over?
+            return;
         }
     }
     self.flipCount++;
