@@ -18,6 +18,7 @@
 		6B2B1F201A8129D60037B47C /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B2B1F1A1A8129D60037B47C /* Deck.m */; };
 		6B2B1F211A8129D60037B47C /* PlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B2B1F1C1A8129D60037B47C /* PlayingCard.m */; };
 		6B2B1F221A8129D60037B47C /* PlayingCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B2B1F1E1A8129D60037B47C /* PlayingCardDeck.m */; };
+		6B894B0E1A8275A000291000 /* CardMatchingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B894B0D1A8275A000291000 /* CardMatchingGame.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,8 @@
 		6B2B1F1C1A8129D60037B47C /* PlayingCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCard.m; path = Model/PlayingCard.m; sourceTree = "<group>"; };
 		6B2B1F1D1A8129D60037B47C /* PlayingCardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayingCardDeck.h; path = Model/PlayingCardDeck.h; sourceTree = "<group>"; };
 		6B2B1F1E1A8129D60037B47C /* PlayingCardDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCardDeck.m; path = Model/PlayingCardDeck.m; sourceTree = "<group>"; };
+		6B894B0C1A8275A000291000 /* CardMatchingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardMatchingGame.h; path = Model/CardMatchingGame.h; sourceTree = "<group>"; };
+		6B894B0D1A8275A000291000 /* CardMatchingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardMatchingGame.m; path = Model/CardMatchingGame.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +138,8 @@
 		6B2B1F161A8125A80037B47C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6B894B0C1A8275A000291000 /* CardMatchingGame.h */,
+				6B894B0D1A8275A000291000 /* CardMatchingGame.m */,
 				6B2B1F171A8129D60037B47C /* Card.h */,
 				6B2B1F181A8129D60037B47C /* Card.m */,
 				6B2B1F191A8129D60037B47C /* Deck.h */,
@@ -251,6 +256,7 @@
 				6B2B1EED1A8049160037B47C /* ViewController.m in Sources */,
 				6B2B1F221A8129D60037B47C /* PlayingCardDeck.m in Sources */,
 				6B2B1EEA1A8049160037B47C /* AppDelegate.m in Sources */,
+				6B894B0E1A8275A000291000 /* CardMatchingGame.m in Sources */,
 				6B2B1F201A8129D60037B47C /* Deck.m in Sources */,
 				6B2B1F211A8129D60037B47C /* PlayingCard.m in Sources */,
 				6B2B1EE71A8049160037B47C /* main.m in Sources */,

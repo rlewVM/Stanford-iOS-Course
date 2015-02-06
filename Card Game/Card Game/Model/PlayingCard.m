@@ -49,4 +49,30 @@
     return _suit ? _suit : @"?";
 }
 
+- (int)match:(NSArray *)otherCards
+{
+    int points = 0;
+    
+    // Need to compare the otherCards to each other as well as the current card to others
+    NSMutableSet *suitsFound = [[NSMutableSet alloc] init];
+    [suitsFound addObject:self.suit];
+    NSMutableSet *ranksFound = [[NSMutableSet alloc] init];
+    [ranksFound addObject:@(self.rank)];
+    
+    for (PlayingCard *card in otherCards) {
+        [suitsFound addObject:card.suit];
+        [ranksFound addObject:@(card.rank)];
+    }
+    
+    NSUInteger matchedSuits = ([otherCards count] + 1) - [suitsFound count];
+    if (matchedSuits > 0) {
+        points += matchedSuits;
+    }
+    NSUInteger matchedRank = ([otherCards count] + 1) - [ranksFound count];
+    if (matchedRank > 0) {
+        points += matchedRank * 4;
+    }
+    return points;
+}
+
 @end
