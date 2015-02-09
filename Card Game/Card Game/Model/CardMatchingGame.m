@@ -68,18 +68,22 @@
             
             NSString *chosenContents = card.contents;
             
-            // Match at least 3 cards
+            // Match the appropriate number of cards
+            // This is not ideal because of the magic number, but it
+            // seems like overkill for this to add a card count for
+            // matching to the game
             if ((self.multiCardMatch && [chosenCards count] < 2) ||
                 (!self.multiCardMatch && ![chosenCards count])) {
                 self.moveMessage = chosenContents;
                 return;
             }
             
-            // Adding other cards to the list of chosen cards
+            // Adding other cards to the chosen cards string
             for (Card *chosenCard in chosenCards) {
                 chosenContents = [chosenContents stringByAppendingString:[NSString stringWithFormat:@", %@", chosenCard.contents]];
             }
             
+            // Performing the actual match check against all chosen cards
             int points = [card match:chosenCards];
             if (points) {
                 int matchPoints = points * MATCH_BONUS;
