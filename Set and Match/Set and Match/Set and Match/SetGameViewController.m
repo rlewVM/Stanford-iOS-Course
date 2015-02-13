@@ -49,10 +49,21 @@
 
 - (NSDictionary *)cardAttributes:(SetCard *)card
 {
-    UIColor *fillColor = (card.shading == STRIPED) ? [card.color colorWithAlphaComponent:.2] : card.color;
-    NSNumber *strokeWidth = (card.shading == EMPTY) ? @5 : @-5;
+    UIColor *cardColor;
+    UIColor *fillColor;
+    
+    if (card.color == CardColorBlue) {
+        cardColor = [UIColor blueColor];
+    } else if (card.color == CardColorOrange) {
+        cardColor = [UIColor orangeColor];
+    } else {
+        cardColor = [UIColor purpleColor];
+    }
+    
+    fillColor = (card.shading == CardShadingStriped) ? [cardColor colorWithAlphaComponent:.2] : cardColor;
+    NSNumber *strokeWidth = (card.shading == CardShadingEmpty) ? @5 : @-5;
         
-    return @{NSForegroundColorAttributeName : fillColor, NSStrokeColorAttributeName : card.color, NSStrokeWidthAttributeName : strokeWidth};
+    return @{NSForegroundColorAttributeName : fillColor, NSStrokeColorAttributeName : cardColor, NSStrokeWidthAttributeName : strokeWidth};
 }
 
 - (NSAttributedString *)cardToAttributedString:(Card *)card

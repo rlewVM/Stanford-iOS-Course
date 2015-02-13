@@ -12,8 +12,8 @@
 
 @property (nonatomic, strong) NSMutableArray *cards;
 @property (nonatomic, readwrite) int score;
-@property (nonatomic, readwrite) int roundPoints;
-@property (nonatomic, strong, readwrite) NSMutableArray *cardsChosenThisTurn;
+@property (nonatomic, strong, readwrite) NSMutableArray *gameHistory;    // Cards
+@property (nonatomic, strong, readwrite) NSMutableArray *scoreHistory;   // NSIntegers
 
 @end
 
@@ -74,6 +74,22 @@
     return _cards;
 }
 
+- (NSMutableArray *)gameHistory
+{
+    if (!_gameHistory) {
+        _gameHistory = [[NSMutableArray alloc] init];
+    }
+    return _gameHistory;
+}
+
+- (NSMutableArray *)scoreHistory
+{
+    if (!_scoreHistory) {
+        _scoreHistory = [[NSMutableArray alloc] init];
+    }
+    return _scoreHistory;
+}
+
 - (Card *) cardAtIndex:(NSInteger) index
 {
     return ([self.cards count] > index) ? self.cards[index] : nil;
@@ -95,10 +111,10 @@
             
             self.score += [self flipCost];
             card.chosen = true;
-            self.cardsChosenThisTurn = [[NSMutableArray alloc] initWithArray:chosenCards];
-            [self.cardsChosenThisTurn addObject:card];
             
             if (([chosenCards count] + 1) < [self numCardsForMatch]) {
+                [self.gameHistory addObject:[[NSMutableArray alloc] initWithArray:@[card]]];
+                [self.scoreHistory addObject:@([self flipCost])];
                 return;
             }
             
@@ -110,15 +126,17 @@
                     matched.matched = true;
                 }
                 card.matched = true;
-                self.roundPoints = matchPoints;
+                [self.scoreHistory addObject:@(matchPoints)];
             } else {
                 self.score += [self mismatchPenalty];
                 for (Card *unmatched in chosenCards) {
                     unmatched.chosen = false;
                 }
-                self.roundPoints = [self mismatchPenalty];
+                [self.scoreHistory addObject:@([self mismatchPenalty])];
             }
-            
+
+            [chosenCards addObject:card];
+            [self.gameHistory addObject:[[NSArray alloc] initWithArray:chosenCards]];
         }
     }
 }

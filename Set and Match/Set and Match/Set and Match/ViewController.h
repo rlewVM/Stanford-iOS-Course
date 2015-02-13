@@ -42,11 +42,5 @@
  */
 - (NSAttributedString *)cardToAttributedString:(Card *)card;
 
-/**
- *  Creates a NSAttributedString describing the move that was made in the current game. The NSArray 
- *  should be an array of Card objects and the points should be the points earned in that turn.
- */
-- (NSAttributedString *)createMoveMessageForCards:(NSArray *)cards andPoints:(int)points;
-
 @end
 

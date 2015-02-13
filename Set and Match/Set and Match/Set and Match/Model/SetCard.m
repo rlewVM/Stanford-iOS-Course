@@ -19,11 +19,6 @@
     return 3;
 }
 
-+ (NSArray *)validColors
-{
-    return @[[UIColor purpleColor], [UIColor blueColor], [UIColor orangeColor]];
-}
-
 + (NSArray *)validSymbols
 {
     return @[@"◼︎", @"▲", @"●"];
@@ -58,13 +53,13 @@
     NSMutableSet *symbolsFound = [[NSMutableSet alloc] initWithArray:@[self.symbol]];
     NSMutableSet *countsFound = [[NSMutableSet alloc] initWithArray:@[@(self.numberOfSymbols)]];
     NSMutableSet *shadingFound = [[NSMutableSet alloc] initWithArray:@[@(self.shading)]];
-    NSMutableSet *colorsFound = [[NSMutableSet alloc] initWithArray:@[self.color]];
+    NSMutableSet *colorsFound = [[NSMutableSet alloc] initWithArray:@[@(self.color)]];
     
     for (SetCard *card in otherCards) {
         [symbolsFound addObject:card.symbol];
         [countsFound addObject:@(card.numberOfSymbols)];
         [shadingFound addObject:@(card.shading)];
-        [colorsFound addObject:card.color];
+        [colorsFound addObject:@(card.color)];
     }
     
     NSUInteger numCards = [otherCards count] + 1;

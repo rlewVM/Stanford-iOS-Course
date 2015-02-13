@@ -15,12 +15,28 @@
 
 @property (strong, nonatomic) Deck *cards;
 @property (strong, nonatomic) CardGame *game;
-@property (strong, nonatomic) NSMutableArray *gameHistory;  // NSAttributedString
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *gameCards;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UIButton *startGameButton;
 @property (weak, nonatomic) IBOutlet UILabel *moveLabel;
+
+/**
+ *  Updates the entire view according to any changes in the data or user actions
+ */
+- (void)updateUI;
+
+/**
+ *  Creates a NSAttributedString describing the move that was made in the current game. The NSArray
+ *  should be an array of Card objects and the points should be the points earned in that turn.
+ */
+- (NSAttributedString *)createMoveMessageForCards:(NSArray *)cards andPoints:(NSNumber *)points;
+
+/**
+ *  Creates an array of attributed strings describing all moves that have been 
+ *  made that were attempted matches.
+ */
+- (NSMutableArray *)createGameHistoryText;
 
 @end
 
@@ -59,7 +75,7 @@
     return [[NSAttributedString alloc] initWithString:card.contents];
 }
 
-- (NSAttributedString *)createMoveMessageForCards:(NSArray *)cards andPoints:(int)points
+- (NSAttributedString *)createMoveMessageForCards:(NSArray *)cards andPoints:(NSNumber *)points
 {
     NSMutableAttributedString *message = [[NSMutableAttributedString alloc] init];
     Card *lastChosenCard = [cards lastObject];
@@ -75,13 +91,10 @@
                 [message appendAttributedString:[[NSAttributedString alloc] initWithString:@", "]];
             }
         }
-        if (points > 0) {
-            [message appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" are a match! %d points.", points]]];
+        if (points.intValue > 0) {
+            [message appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" are a match! %@ points.", points]]];
         } else {
-            [message appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" are not a match. %d points penalty!", points]]];
-        }
-        if ([message.string length]) {
-            [self.gameHistory addObject:message];
+            [message appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" are not a match. %@ points penalty!", points]]];
         }
     }
     // Question: Is it okay to return an mutable copy here?
@@ -104,27 +117,16 @@
     return _game;
 }
 
-- (NSMutableArray *)gameHistory
-{
-    if (!_gameHistory) {
-        _gameHistory = [[NSMutableArray alloc] init];
-    }
-    return _gameHistory;
-}
-
 - (IBAction)touchCardButton:(UIButton *)sender
 {
     NSUInteger index = [self.gameCards indexOfObject:sender];
     [self.game chooseCardAtIndex:index];
     [self updateUI];
-    self.moveLabel.attributedText = [self createMoveMessageForCards:self.game.cardsChosenThisTurn andPoints:self.game.roundPoints];
 }
 
 - (IBAction)touchNewGame:(id)sender {
     self.game = nil;
-    self.gameHistory = nil;
     [self updateUI];
-    self.moveLabel.attributedText = [[NSAttributedString alloc] initWithString:@""];
 }
 
 - (void)updateUI
@@ -140,6 +142,20 @@
         button.enabled = !card.isMatched;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    self.moveLabel.attributedText = [self createMoveMessageForCards:[self.game.gameHistory lastObject] andPoints:(NSNumber *)[self.game.scoreHistory lastObject]];
+}
+
+- (NSMutableArray *)createGameHistoryText
+{
+    NSMutableArray *history = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [self.game.gameHistory count]; i++) {
+        if (i < [self.game.scoreHistory count] &&
+            ([self.game.gameHistory[i] count] == [self.game numCardsForMatch])) {
+            [history addObject:[self createMoveMessageForCards:self.game.gameHistory[i] andPoints:(NSNumber *)self.game.scoreHistory[i]]];
+        }
+    }
+    
+    return history;
 }
 
 #pragma mark - Navigation
@@ -149,7 +165,7 @@
     ViewController *destVC = [segue destinationViewController];
     if ([destVC isKindOfClass:[HistoryViewController class]]) {
         HistoryViewController *historyVC = (HistoryViewController *)destVC;
-        historyVC.moveList = self.gameHistory;
+        historyVC.moveList = [self createGameHistoryText];
     }
 }
 

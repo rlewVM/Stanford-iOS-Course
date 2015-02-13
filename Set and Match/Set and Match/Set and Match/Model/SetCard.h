@@ -10,22 +10,28 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-enum CardShading {
-    EMPTY = 0,
-    STRIPED,
-    FILLED,
-    SHADE_COUNT
-} CardShading;
+typedef NS_ENUM(NSUInteger, CardShading) {
+    CardShadingEmpty = 0,
+    CardShadingStriped,
+    CardShadingFilled,
+    CardShadingLast
+};
+
+typedef NS_ENUM(NSUInteger, CardColor) {
+    CardColorBlue = 0,
+    CardColorPurple,
+    CardColorOrange,
+    CardColorLast
+};
 
 @interface SetCard : Card
 
 @property (strong, nonatomic) NSString *symbol;
 @property (nonatomic) NSUInteger numberOfSymbols;
 @property (nonatomic) enum CardShading shading;
-@property (nonatomic, strong) UIColor *color;
+@property (nonatomic) enum CardColor color;
 
 + (NSArray *)validSymbols;
-+ (NSArray *)validColors;
 + (int)maxCount;
 
 @end

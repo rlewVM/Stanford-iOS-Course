@@ -14,8 +14,8 @@
 @interface CardGame : NSObject
 
 @property (nonatomic, readonly) int score;
-@property (nonatomic, readonly) int roundPoints;
-@property (nonatomic, strong, readonly) NSMutableArray *cardsChosenThisTurn;
+@property (nonatomic, strong, readonly) NSMutableArray *gameHistory;    // Cards
+@property (nonatomic, strong, readonly) NSMutableArray *scoreHistory;   // NSIntegers
 
 /**
  *  ABSTRACT method that returns the number of cards necessary for a match in this game. Default is 0.
