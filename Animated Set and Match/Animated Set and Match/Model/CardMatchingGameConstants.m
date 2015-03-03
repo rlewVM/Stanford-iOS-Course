@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Rachel Lew. All rights reserved.
 //
 
-#import "CardMatchingGame.h"
+#import "CardMatchingGameConstants.h"
 
-@implementation CardMatchingGame
+@implementation CardMatchingGameConstants
 
 - (int)numCardsForMatch
 {
@@ -28,6 +28,11 @@
 - (int)mismatchPenalty
 {
     return -1;
+}
+
+- (int)cardsPerDeal
+{
+    return 1;
 }
 
 @end

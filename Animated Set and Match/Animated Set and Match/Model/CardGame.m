@@ -10,46 +10,15 @@
 
 @interface CardGame()
 
-@property (nonatomic, strong) NSMutableArray *cards;
+@property (nonatomic, readwrite, strong) NSMutableArray *cards;
+@property (nonatomic, readwrite, strong) NSObject<CardGameConstants> *gameConstants;
 @property (nonatomic, readwrite) int score;
-@property (nonatomic, strong, readwrite) NSMutableArray *gameHistory;    // Cards
-@property (nonatomic, strong, readwrite) NSMutableArray *scoreHistory;   // NSIntegers
 
 @end
 
 @implementation CardGame
 
-// Abstract
-- (int)numCardsForMatch
-{
-    return 0;
-}
-
-// Abstract
-- (int)flipCost
-{
-    return 0;
-}
-
-// Abstract
-- (int)matchBonus
-{
-    return 1;
-}
-
-// Abstract
-- (int)mismatchPenalty
-{
-    return 0;
-}
-
-// Abstract
-- (NSAttributedString *)createMoveMessageWithCards:(NSAttributedString *)cards andPoints:(int)points
-{
-    return nil;
-}
-
-- (instancetype) initWithCardCount:(NSUInteger) count usingDeck:(Deck *) deck
+- (instancetype) initWithCardCount:(NSUInteger) count usingDeck:(Deck *) deck andConstants:(NSObject<CardGameConstants> *)constants
 {
     self = [super init];
     if (self) {
@@ -62,6 +31,7 @@
                 break;
             }
         }
+        self.gameConstants = constants;
     }
     return self;
 }
@@ -74,20 +44,22 @@
     return _cards;
 }
 
-- (NSMutableArray *)gameHistory
+- (NSUInteger)dealNewCardsFromDeck:(Deck *)deck
 {
-    if (!_gameHistory) {
-        _gameHistory = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [self.gameConstants cardsPerDeal]; i++) {
+        Card *card = [deck drawRandomCard];
+        if (card) {
+            [self.cards addObject:card];
+        }
     }
-    return _gameHistory;
-}
-
-- (NSMutableArray *)scoreHistory
-{
-    if (!_scoreHistory) {
-        _scoreHistory = [[NSMutableArray alloc] init];
+    
+    NSUInteger cardsInPlay = 0;
+    for (Card *card in self.cards) {
+        if (!card.isMatched) {
+            cardsInPlay++;
+        }
     }
-    return _scoreHistory;
+    return cardsInPlay;
 }
 
 - (Card *) cardAtIndex:(NSInteger) index
@@ -109,34 +81,27 @@
                 }
             }
             
-            self.score += [self flipCost];
+            self.score += [self.gameConstants flipCost];
             card.chosen = true;
             
-            if (([chosenCards count] + 1) < [self numCardsForMatch]) {
-                [self.gameHistory addObject:[[NSMutableArray alloc] initWithArray:@[card]]];
-                [self.scoreHistory addObject:@([self flipCost])];
+            if (([chosenCards count] + 1) < [self.gameConstants numCardsForMatch]) {
                 return;
             }
             
             int points = [card match:chosenCards];
             if (points) {
-                int matchPoints = points * [self matchBonus];
+                int matchPoints = points * [self.gameConstants matchBonus];
                 self.score += matchPoints;
                 for (Card *matched in chosenCards) {
                     matched.matched = true;
                 }
                 card.matched = true;
-                [self.scoreHistory addObject:@(matchPoints)];
             } else {
-                self.score += [self mismatchPenalty];
+                self.score += [self.gameConstants mismatchPenalty];
                 for (Card *unmatched in chosenCards) {
                     unmatched.chosen = false;
                 }
-                [self.scoreHistory addObject:@([self mismatchPenalty])];
             }
-
-            [chosenCards addObject:card];
-            [self.gameHistory addObject:[[NSArray alloc] initWithArray:chosenCards]];
         }
     }
 }

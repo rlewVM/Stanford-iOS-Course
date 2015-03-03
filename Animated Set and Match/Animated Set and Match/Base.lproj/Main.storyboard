@@ -1,7 +1,164 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gba-bE-cRf">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
-    <scenes/>
+    <scenes>
+        <!--Set-->
+        <scene sceneID="hAz-lb-fdT">
+            <objects>
+                <viewController id="r5c-ad-5KK" customClass="SetGameViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nt2-3Z-2Oc"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ujk-wO-Etk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="YQE-nX-Seu">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AcU-rT-hf6">
+                                <rect key="frame" x="16" y="485" width="64" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPP-Ii-jbo">
+                                <rect key="frame" x="145" y="481" width="31" height="30"/>
+                                <state key="normal" title="Deal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchDealButton:" destination="r5c-ad-5KK" eventType="touchUpInside" id="l7b-86-Zgy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XOg-6u-dOs">
+                                <rect key="frame" x="228" y="481" width="76" height="30"/>
+                                <state key="normal" title="New Game">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchNewGame:" destination="r5c-ad-5KK" eventType="touchUpInside" id="qo3-3j-WBK"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SQx-oF-4nv" customClass="CardGameGridView">
+                                <rect key="frame" x="16" y="28" width="288" height="449"/>
+                                <gestureRecognizers/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="0.32779920060000001" blue="0.32732839940000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Ujk-wO-Etk" firstAttribute="top" secondItem="iPP-Ii-jbo" secondAttribute="bottom" constant="8" symbolic="YES" id="08a-pp-uoC"/>
+                            <constraint firstItem="XOg-6u-dOs" firstAttribute="trailing" secondItem="SQx-oF-4nv" secondAttribute="trailing" id="3pD-D2-UUc"/>
+                            <constraint firstItem="SQx-oF-4nv" firstAttribute="centerX" secondItem="iPP-Ii-jbo" secondAttribute="centerX" id="5nJ-P2-t6c"/>
+                            <constraint firstItem="iPP-Ii-jbo" firstAttribute="baseline" secondItem="XOg-6u-dOs" secondAttribute="baseline" id="7uX-L1-wkH"/>
+                            <constraint firstItem="SQx-oF-4nv" firstAttribute="top" secondItem="nt2-3Z-2Oc" secondAttribute="bottom" constant="8" symbolic="YES" id="UHD-0o-8Si"/>
+                            <constraint firstItem="AcU-rT-hf6" firstAttribute="top" secondItem="SQx-oF-4nv" secondAttribute="bottom" constant="8" symbolic="YES" id="XxC-y1-4Zb"/>
+                            <constraint firstItem="SQx-oF-4nv" firstAttribute="trailing" secondItem="YQE-nX-Seu" secondAttribute="trailingMargin" id="YVK-0u-xWO"/>
+                            <constraint firstItem="iPP-Ii-jbo" firstAttribute="baseline" secondItem="AcU-rT-hf6" secondAttribute="baseline" id="YpA-s3-NDu"/>
+                            <constraint firstItem="AcU-rT-hf6" firstAttribute="leading" secondItem="SQx-oF-4nv" secondAttribute="leading" id="p6V-zt-vOm"/>
+                            <constraint firstItem="AcU-rT-hf6" firstAttribute="leading" secondItem="YQE-nX-Seu" secondAttribute="leadingMargin" id="y3B-qj-GJt"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Set" id="Tn1-Zp-Ep4"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="cardGridView" destination="SQx-oF-4nv" id="c1f-J3-V3R"/>
+                        <outlet property="dealButton" destination="iPP-Ii-jbo" id="Zkq-cZ-86I"/>
+                        <outlet property="scoreLabel" destination="AcU-rT-hf6" id="5yJ-36-Hw2"/>
+                        <outlet property="startGameButton" destination="XOg-6u-dOs" id="jBi-hL-mnp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8DT-W9-Hwu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="707" y="718"/>
+        </scene>
+        <!--Match-->
+        <scene sceneID="mNr-aF-ayB">
+            <objects>
+                <viewController id="3Bx-KC-kuf" customClass="MatchingGameViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HZw-Kh-7w1"/>
+                        <viewControllerLayoutGuide type="bottom" id="l8X-f4-VSR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9W8-H3-CNf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9s-fh-deD">
+                                <rect key="frame" x="16" y="485" width="64" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="emX-z5-kqb">
+                                <rect key="frame" x="145" y="481" width="31" height="30"/>
+                                <state key="normal" title="Deal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchDealButton:" destination="3Bx-KC-kuf" eventType="touchUpInside" id="srl-az-f79"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8RY-0v-UuU">
+                                <rect key="frame" x="228" y="481" width="76" height="30"/>
+                                <state key="normal" title="New Game">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchNewGame:" destination="3Bx-KC-kuf" eventType="touchUpInside" id="Ve1-2O-09K"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q7O-NW-XtW" customClass="CardGameGridView">
+                                <rect key="frame" x="16" y="28" width="288" height="445"/>
+                                <gestureRecognizers/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.74141444779999999" green="0.81172031680000001" blue="0.87428977269999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="K9s-fh-deD" firstAttribute="leading" secondItem="9W8-H3-CNf" secondAttribute="leadingMargin" id="1c4-M6-oTG"/>
+                            <constraint firstItem="Q7O-NW-XtW" firstAttribute="top" secondItem="HZw-Kh-7w1" secondAttribute="bottom" constant="8" symbolic="YES" id="2Qf-m8-NZg"/>
+                            <constraint firstItem="8RY-0v-UuU" firstAttribute="trailing" secondItem="9W8-H3-CNf" secondAttribute="trailingMargin" id="36D-8Q-HG1"/>
+                            <constraint firstItem="8RY-0v-UuU" firstAttribute="baseline" secondItem="emX-z5-kqb" secondAttribute="baseline" id="3l3-ql-p0j"/>
+                            <constraint firstItem="K9s-fh-deD" firstAttribute="baseline" secondItem="emX-z5-kqb" secondAttribute="baseline" id="4Ce-1n-qbU"/>
+                            <constraint firstItem="emX-z5-kqb" firstAttribute="top" secondItem="Q7O-NW-XtW" secondAttribute="bottom" constant="8" symbolic="YES" id="6mu-iT-ae0"/>
+                            <constraint firstItem="Q7O-NW-XtW" firstAttribute="centerX" secondItem="emX-z5-kqb" secondAttribute="centerX" id="7KF-RG-8qN"/>
+                            <constraint firstItem="Q7O-NW-XtW" firstAttribute="trailing" secondItem="8RY-0v-UuU" secondAttribute="trailing" id="PzR-MJ-a8c"/>
+                            <constraint firstItem="l8X-f4-VSR" firstAttribute="top" secondItem="emX-z5-kqb" secondAttribute="bottom" constant="8" symbolic="YES" id="VfA-nd-o9i"/>
+                            <constraint firstItem="K9s-fh-deD" firstAttribute="leading" secondItem="Q7O-NW-XtW" secondAttribute="leading" id="YEt-cZ-qiN"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Match" id="2qo-Xs-mZ8"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="cardGridView" destination="Q7O-NW-XtW" id="SZ9-RW-Ka6"/>
+                        <outlet property="dealButton" destination="emX-z5-kqb" id="DqQ-it-y0S"/>
+                        <outlet property="scoreLabel" destination="K9s-fh-deD" id="M47-9i-GaP"/>
+                        <outlet property="startGameButton" destination="8RY-0v-UuU" id="Yg4-Cf-SRj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r4t-Ab-a8l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="707" y="56"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="5iu-A5-4cK">
+            <objects>
+                <tabBarController id="gba-bE-cRf" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="UYa-bp-Kfv">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="3Bx-KC-kuf" kind="relationship" relationship="viewControllers" id="qP5-Lv-HgB"/>
+                        <segue destination="r5c-ad-5KK" kind="relationship" relationship="viewControllers" id="r20-oq-OOD"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zIR-bn-RCY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-113" y="387"/>
+        </scene>
+    </scenes>
 </document>

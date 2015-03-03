@@ -11,33 +11,40 @@
 #import "Deck.h"
 #import "Card.h"
 
-@interface CardGame : NSObject
-
-@property (nonatomic, readonly) int score;
-@property (nonatomic, strong, readonly) NSMutableArray *gameHistory;    // Cards
-@property (nonatomic, strong, readonly) NSMutableArray *scoreHistory;   // NSIntegers
+@protocol CardGameConstants
 
 /**
- *  ABSTRACT method that returns the number of cards necessary for a match in this game. Default is 0.
+ *  @brief method that returns the number of cards necessary for a match in this game. Default is 0.
  */
 - (int)numCardsForMatch;
 /**
- *  ABSTRACT method that returns the cost of flipping over or selecting a card in this game. Default is 0.
+ *  @brief method that returns the cost of flipping over or selecting a card in this game. Default is 0.
  */
 - (int)flipCost;
 /**
- *  ABSTRACT method that returns the points multiplier for when a match is found. Default is 1.
+ *  @brief method that returns the points multiplier for when a match is found. Default is 1.
  */
 - (int)matchBonus;
 /**
- *  ABSTRACT method that returns the number of points subtracted when a mismatch is found. Default is 0.
+ *  @brief method that returns the number of points subtracted when a mismatch is found. Default is 0.
  */
 - (int)mismatchPenalty;
+
+- (int)cardsPerDeal;
+
+@end
+
+@interface CardGame : NSObject
+
+@property (nonatomic, readonly) int score;
+@property (nonatomic, readonly, strong) NSObject<CardGameConstants> *gameConstants;
 
 /**
  *  Initializes the game's cards using the passed in deck. "Deals" the number of cards specified by count.
  */
-- (instancetype) initWithCardCount:(NSUInteger) count usingDeck:(Deck *) deck;
+- (instancetype) initWithCardCount:(NSUInteger) count usingDeck:(Deck *) deck andConstants:(NSObject<CardGameConstants> *)constants;
+
+- (NSUInteger)dealNewCardsFromDeck:(Deck *)deck;
 
 /**
  *  Returns the card at the given index from the dealt cards.

@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CardView.h"
 
 @interface CardGameGridView : UIView
+
+@property (nonatomic, readwrite) NSUInteger cardCount;
+@property (nonatomic, readwrite) CGFloat aspectRatio;
+
+- (void)updateCardGridBounds;
 
 @end

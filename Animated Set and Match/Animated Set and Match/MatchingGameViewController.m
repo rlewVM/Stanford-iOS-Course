@@ -7,8 +7,9 @@
 //
 
 #import "MatchingGameViewController.h"
-#import "CardMatchingGame.h"
+#import "CardMatchingGameConstants.h"
 #import "PlayingCardDeck.h"
+#import "PlayingCardView.h"
 
 @interface MatchingGameViewController ()
 
@@ -16,27 +17,42 @@
 
 @implementation MatchingGameViewController
 
+#define INITIAL_CARDS_IN_PLAY ((NSUInteger) 24)
+
 - (Deck *)createDeck
 {
     return [[PlayingCardDeck alloc] init];
 }
 
-- (CardGame *)createGameWithCardCount:(NSInteger)count
+- (CardGame *)createGame
 {
-    return [[CardMatchingGame alloc] initWithCardCount:count usingDeck:[self createDeck]];
+    return [[CardGame alloc] initWithCardCount:INITIAL_CARDS_IN_PLAY usingDeck:self.cards andConstants:[CardMatchingGameConstants new]];
 }
 
-- (void)updateButtonAppearance:(UIButton *)button whenCardSelected:(Card *)card
+- (void)initializeCardViewInGrid:(CardGame *)game
 {
-    [button setAttributedTitle:[self cardToAttributedString:card] forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageNamed:@"cardfront"] forState:UIControlStateNormal];
+    self.cardGridView.cardCount = INITIAL_CARDS_IN_PLAY;
+    for (int i = 0; i < INITIAL_CARDS_IN_PLAY; i++) {
+        Card *card = [game cardAtIndex:i];
+        UIView *view = [self createSubviewWithCard:card withTag:i];
+        [self.cardGridView addSubview:view];
+    }
 }
 
-- (void)updateButtonAppearance:(UIButton *)button whenCardUnselected:(Card *)card
+- (BOOL)shouldFlipView:(CardView *)view withCard:(Card *)card
 {
-    [button setAttributedTitle:[[NSAttributedString alloc] initWithString:@""] forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageNamed:@"cardbackBlue"] forState:UIControlStateNormal];
+    return (card.isChosen && !view.isFaceup) || (!card.isChosen && view.isFaceup);
 }
+
+- (CardView *)createSubviewWithCard:(Card *)card withTag:(NSUInteger)tag
+{
+    PlayingCardView *view = [[PlayingCardView alloc] initWithCard:card];
+    [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                       action:@selector(tapToChoose:)]];
+    view.tag = tag;
+    return view;
+}
+
 /*
 #pragma mark - Navigation
 

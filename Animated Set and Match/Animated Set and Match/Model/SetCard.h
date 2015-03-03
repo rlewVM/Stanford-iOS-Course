@@ -24,14 +24,20 @@ typedef NS_ENUM(NSUInteger, CardColor) {
     CardColorLast
 };
 
+typedef NS_ENUM(NSUInteger, CardShape) {
+    CardShapeOval = 0,
+    CardShapeDiamond,
+    CardShapeSquiggle,
+    CardShapeLast
+};
+
 @interface SetCard : Card
 
-@property (strong, nonatomic) NSString *symbol;
+@property (nonatomic) enum CardShape shape;
 @property (nonatomic) NSUInteger numberOfSymbols;
 @property (nonatomic) enum CardShading shading;
 @property (nonatomic) enum CardColor color;
 
-+ (NSArray *)validSymbols;
 + (int)maxCount;
 
 @end

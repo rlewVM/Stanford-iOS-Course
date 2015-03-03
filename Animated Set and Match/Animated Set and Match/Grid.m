@@ -149,7 +149,7 @@
 
 - (void)setMinCellWidth:(CGFloat)minCellWidth
 {
-    if (minCellWidth != _minCellHeight) self.resolved = NO;
+    if (minCellWidth != _minCellWidth) self.resolved = NO;
     _minCellWidth = minCellWidth;
 }
 

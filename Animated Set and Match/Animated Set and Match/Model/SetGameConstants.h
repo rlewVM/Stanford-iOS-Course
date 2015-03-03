@@ -8,6 +8,6 @@
 
 #import "CardGame.h"
 
-@interface SetGame : CardGame
+@interface SetGameConstants : NSObject <CardGameConstants>
 
 @end

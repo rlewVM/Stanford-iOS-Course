@@ -8,13 +8,9 @@
 
 #import "SetGameViewController.h"
 #import "SetCard.h"
+#import "SetCardView.h"
 
 @interface SetGameViewController ()
-
-/**
- *  Returns a map of style attributes for a SetCard based on its shading and color.
- */
-- (NSDictionary *)cardAttributes:(SetCard *)card;
 
 @end
 
@@ -27,57 +23,34 @@
 
 - (Deck *)createDeck
 {
-    return [[SetCardDeck alloc] init];
+    return [SetCardDeck new];
 }
 
-- (CardGame *)createGameWithCardCount:(NSInteger)count
+#define INITIAL_CARDS_IN_PLAY ((NSUInteger) 12)
+- (CardGame *)createGame
 {
-    return [[SetGame alloc] initWithCardCount:count usingDeck:[self createDeck]];
+    return [[CardGame alloc] initWithCardCount:INITIAL_CARDS_IN_PLAY usingDeck:self.cards andConstants:[SetGameConstants new]];
 }
 
-- (void)updateButtonAppearance:(UIButton *)button whenCardSelected:(Card *)card
+- (void)initializeCardViewInGrid:(CardGame *)game
 {
-    [button setAttributedTitle:[self cardToAttributedString:card] forState:UIControlStateNormal];
-    [button setBackgroundColor:[button.backgroundColor colorWithAlphaComponent:.7]];
-}
+    self.cardGridView.cardCount = INITIAL_CARDS_IN_PLAY;
+    self.cardGridView.aspectRatio = 60.0 / 40.0;
 
-- (void)updateButtonAppearance:(UIButton *)button whenCardUnselected:(Card *)card
-{
-    [button setAttributedTitle:[self cardToAttributedString:card] forState:UIControlStateNormal];
-    [button setBackgroundColor:[button.backgroundColor colorWithAlphaComponent:1]];
-}
-
-- (NSDictionary *)cardAttributes:(SetCard *)card
-{
-    UIColor *cardColor;
-    UIColor *fillColor;
-    
-    if (card.color == CardColorBlue) {
-        cardColor = [UIColor blueColor];
-    } else if (card.color == CardColorOrange) {
-        cardColor = [UIColor orangeColor];
-    } else {
-        cardColor = [UIColor purpleColor];
+    for (int i = 0; i < INITIAL_CARDS_IN_PLAY; i++) {
+        Card *card = [game cardAtIndex:i];
+        UIView *view = [self createSubviewWithCard:card withTag:i];
+        [self.cardGridView addSubview:view];
     }
-    
-    fillColor = (card.shading == CardShadingStriped) ? [cardColor colorWithAlphaComponent:.2] : cardColor;
-    NSNumber *strokeWidth = (card.shading == CardShadingEmpty) ? @5 : @-5;
-        
-    return @{NSForegroundColorAttributeName : fillColor, NSStrokeColorAttributeName : cardColor, NSStrokeWidthAttributeName : strokeWidth};
 }
 
-- (NSAttributedString *)cardToAttributedString:(Card *)card
+- (CardView *)createSubviewWithCard:(Card *)card withTag:(NSUInteger)tag
 {
-    if (![card isKindOfClass:[SetCard class]]) {
-        return nil;
-    }
-    SetCard *setCard = (SetCard *)card;
-    NSString *c = [[NSString alloc] initWithString:setCard.symbol];
-    for (int i = 1; i < setCard.numberOfSymbols; i++) {
-        c = [c stringByAppendingString:setCard.symbol];
-    }
-    
-    return [[NSAttributedString alloc] initWithString:c attributes:[self cardAttributes:setCard]];
+    SetCardView *view = [[SetCardView alloc] initWithCard:card];
+    view.tag = tag;
+    [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                       action:@selector(tapToChoose:)]];
+    return view;
 }
 
 @end

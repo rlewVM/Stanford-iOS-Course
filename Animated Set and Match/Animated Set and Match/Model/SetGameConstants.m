@@ -6,13 +6,18 @@
 //  Copyright (c) 2015 Rachel Lew. All rights reserved.
 //
 
-#import "SetGame.h"
+#import "SetGameConstants.h"
 
-@implementation SetGame
+@implementation SetGameConstants
 
 - (int)numCardsForMatch
 {
     return 3;
+}
+
+- (int)flipCost
+{
+    return 0;
 }
 
 - (int)matchBonus
@@ -23,6 +28,11 @@
 - (int)mismatchPenalty
 {
     return -5;
+}
+
+- (int)cardsPerDeal
+{
+    return 3;
 }
 
 @end
