@@ -32,7 +32,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FlickPhotoCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FlickrPhotoCell" forIndexPath:indexPath];
     
     NSDictionary *photoInfo = self.photos[indexPath.row];
     cell.textLabel.text = [photoInfo valueForKeyPath:FLICKR_PHOTO_TITLE];
@@ -91,7 +91,7 @@
 
 - (void)prepareImageViewController:(ImageViewController *)imageVC toDisplayPhoto:(NSDictionary *)photo
 {
-    imageVC.imageURL = [FlickrFetcher URLForPhoto:photo format:FlickrPhotoFormatLarge];
+    imageVC.imageURL = [FlickrFetcher URLforPhoto:photo format:FlickrPhotoFormatLarge];
     imageVC.title = [photo valueForKeyPath:FLICKR_PHOTO_TITLE];
 }
 
