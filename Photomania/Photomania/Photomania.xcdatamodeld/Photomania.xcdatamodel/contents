@@ -11,11 +11,12 @@
         <relationship name="whoTook" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Photographer" inverseName="photos" inverseEntity="Photographer" syncable="YES"/>
     </entity>
     <entity name="Photographer" representedClassName="Photographer" syncable="YES">
+        <attribute name="isUser" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="whoTook" inverseEntity="Photo" syncable="YES"/>
     </entity>
     <elements>
         <element name="Photo" positionX="-63" positionY="-18" width="128" height="163"/>
-        <element name="Photographer" positionX="108" positionY="-18" width="128" height="73"/>
+        <element name="Photographer" positionX="108" positionY="-18" width="128" height="90"/>
     </elements>
 </model>

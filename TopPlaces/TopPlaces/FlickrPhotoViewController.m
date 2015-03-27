@@ -111,7 +111,7 @@
         photoVC.title = cell.textLabel.text;
         
         NSIndexPath *path = [self.tableView indexPathForCell:cell];
-        if (path && [self.photos count] < path.row && self.photos[path.row] && [segue.identifier isEqualToString:@"DisplayPhoto"]) {
+        if (path && [self.photos count] > path.row && self.photos[path.row] && [segue.identifier isEqualToString:@"Display Photo"]) {
             [self prepareImageViewController:segue.destinationViewController toDisplayPhoto:self.photos[path.row]];
         }
     }

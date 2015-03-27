@@ -10,6 +10,8 @@
 
 @interface Photographer (Create)
 
-+(Photographer *)photograhperWithName:(NSString *)name inManagedObjectContext:(NSManagedObjectContext *)context;
++ (Photographer *)getMyUserInManagedObjectContext:(NSManagedObjectContext *)context;
+
++ (Photographer *)photograhperWithName:(NSString *)name inManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

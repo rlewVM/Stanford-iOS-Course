@@ -12,4 +12,6 @@
 #define ImageViewChangeNotification @"ImageViewChangeNotification"
 #define ImageViewChangeSelectedPhoto @"ImageViewChangeSelectedPhoto"
 
+#define AddImageNotification @"AddImageNotification"
+
 #endif

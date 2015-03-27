@@ -47,6 +47,7 @@
     self.scrollView.contentSize = self.image ? self.image.size : CGSizeZero;
     
     [self.spinner stopAnimating];
+    self.spinner.hidden = YES;
 }
 
 - (void)setScrollView:(UIScrollView *)scrollView
@@ -76,6 +77,7 @@
     self.image = nil;
     
     if (self.imageURL) {
+        self.spinner.hidden = NO;
         [self.spinner startAnimating];
         
         NSURLRequest *request = [NSURLRequest requestWithURL:self.imageURL];

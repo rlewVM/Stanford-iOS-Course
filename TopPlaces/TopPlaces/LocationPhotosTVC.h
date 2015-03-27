@@ -11,6 +11,6 @@
 
 @interface LocationPhotosTVC : FlickrPhotoViewController
 
-@property (nonatomic, strong) id locationId;
+@property (nonatomic, strong) NSString *locationId;
 
 @end

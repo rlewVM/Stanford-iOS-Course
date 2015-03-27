@@ -43,7 +43,7 @@
                                                                             repeats:YES];
     }
 
-    [NSTimer scheduledTimerWithTimeInterval:20*60. target:self selector:@selector(startFlickrFetch) userInfo:nil repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:20*60 target:self selector:@selector(startFlickrFetch) userInfo:nil repeats:YES];
     
     NSDictionary *userInfo = self.photoDB.managedObjectContext ? @{ PhotoDatabaseAvailabilityContext : self.photoDB.managedObjectContext } : nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:PhotoDatabaseAvailabilityNotification

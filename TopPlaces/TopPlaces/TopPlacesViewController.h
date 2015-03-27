@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CoreDataTableViewController.h"
 
-@interface TopPlacesViewController : UITableViewController
+@interface TopPlacesViewController : CoreDataTableViewController
 
-@property (nonatomic, strong) NSArray *places;
+@property (nonatomic, strong) NSManagedObjectContext *context;
 
 @end

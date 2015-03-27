@@ -10,32 +10,51 @@
 #import "Photo+MKAnnotation.h"
 #import "ImageViewController.h"
 #import "ImageViewChange.h"
+#import "AddPhotoViewController.h"
 
 @interface PhotosByPhotographerMapVC () <MKMapViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addPhotoBarButtonItem;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) NSArray *photosByPhotographer;
 @property (nonatomic, strong) ImageViewController *imageViewController;
-@property (nonatomic, strong) id<NSObject> notificationObserver;
+@property (nonatomic, strong) NSArray *notificationObservers;
 
 @end
 
 @implementation PhotosByPhotographerMapVC
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    self.notificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:ImageViewChangeNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
-        Photo *photo = note.userInfo[ImageViewChangeSelectedPhoto];
-        if (![self.mapView.selectedAnnotations containsObject:photo]) {
-            [self.mapView selectAnnotation:photo animated:YES];
-        }
-    }];}
+    self.notificationObservers =
+        @[[[NSNotificationCenter defaultCenter] addObserverForName:ImageViewChangeNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+            Photo *photo = note.userInfo[ImageViewChangeSelectedPhoto];
+            if (![self.mapView.selectedAnnotations containsObject:photo]) {
+                [self.mapView selectAnnotation:photo animated:YES];
+            }
+        }],
+          [[NSNotificationCenter defaultCenter] addObserverForName:AddImageNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+              Photo *photo = note.userInfo[ImageViewChangeSelectedPhoto];
+              if (photo && ![self.mapView.annotations containsObject:photo]) {
+                  [self.mapView addAnnotation:photo];
+                  [self.mapView selectAnnotation:photo animated:YES];
+              }
+          }]];
+}
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self.notificationObserver];
+    for( id<NSObject> notificationObserver in self.notificationObservers) {
+        [[NSNotificationCenter defaultCenter] removeObserver:notificationObserver];
+    }
+    self.notificationObservers = nil;
 }
 
 - (void)setMapView:(MKMapView *)mapView
@@ -52,6 +71,28 @@
     self.title = self.photographer.name;
     self.photosByPhotographer = nil;
     [self updateMapViewAnnotations];
+    [self updateBarButtonItems];
+}
+
+- (void)updateBarButtonItems
+{
+    if (self.addPhotoBarButtonItem) {
+        NSMutableArray *rightBarButtonItems = [self.navigationItem.rightBarButtonItems mutableCopy];
+        if (!rightBarButtonItems) {
+            rightBarButtonItems = [NSMutableArray new];
+        }
+        NSInteger addPhotoBarButtonIndex = [rightBarButtonItems indexOfObject:self.addPhotoBarButtonItem];
+        if (addPhotoBarButtonIndex == NSNotFound) {
+            if ([self.photographer.isUser boolValue]) {
+                [rightBarButtonItems addObject:self.addPhotoBarButtonItem];
+            }
+        } else {
+            if (![self.photographer.isUser boolValue]) {
+                [rightBarButtonItems removeObject:self.addPhotoBarButtonItem];
+            }
+        }
+        self.navigationItem.rightBarButtonItems = rightBarButtonItems;
+    }
 }
 
 - (NSArray *)photosByPhotographer
@@ -197,8 +238,32 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([sender isKindOfClass:[MKAnnotationView class]]) {
+    if ([segue.destinationViewController isKindOfClass:[AddPhotoViewController class]]) {
+        AddPhotoViewController *addPhotoVC = (AddPhotoViewController *)segue.destinationViewController;
+        if ([self.photographer.isUser boolValue]) {
+            addPhotoVC.photographer = self.photographer;
+        }
+    }
+    else if ([sender isKindOfClass:[MKAnnotationView class]]) {
         [self prepareViewController:segue.destinationViewController forSegue:segue.identifier fromAnnotation:((MKAnnotationView *)sender).annotation];
+    }
+}
+
+- (IBAction)doneAddingPhoto:(UIStoryboardSegue *)segue
+{
+    if ([segue.sourceViewController isKindOfClass: [AddPhotoViewController class]]) {
+        AddPhotoViewController *addPhotoVC = (AddPhotoViewController *)segue.sourceViewController;
+        Photo *addedPhoto = addPhotoVC.addedPhoto;
+        if (addedPhoto) {
+            [self.mapView addAnnotation:addedPhoto];
+            [self.mapView showAnnotations:@[addedPhoto] animated:YES];
+            self.photosByPhotographer = nil;    // recalculate
+            
+            NSDictionary *userInfo = @{ ImageViewChangeSelectedPhoto : addedPhoto };
+            [[NSNotificationCenter defaultCenter] postNotificationName:AddImageNotification object:nil userInfo:userInfo];
+        } else {
+            NSLog(@"Unable to add photo. Found nil photo");
+        }
     }
 }
 

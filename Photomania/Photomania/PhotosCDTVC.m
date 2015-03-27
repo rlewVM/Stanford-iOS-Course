@@ -14,7 +14,7 @@
 @interface PhotosCDTVC ()
 
 @property (strong, nonatomic) ImageViewController *imageViewController;
-@property (nonatomic, strong) id<NSObject> notificationObserver;
+@property (nonatomic, strong) NSArray *notificationObservers;
 
 @end
 
@@ -24,20 +24,30 @@
 {
     [super viewDidAppear:animated];
     if (self.imageViewController) {
-        self.notificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:ImageViewChangeNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        typedef void (^select_image_block_t)(NSNotification *note);
+        select_image_block_t selectBlock = ^(NSNotification *note){
             Photo *photo = note.userInfo[ImageViewChangeSelectedPhoto];
             NSIndexPath *path = [self.fetchedResultsController indexPathForObject:photo];
             if (path && ![path isEqual:[self.tableView indexPathForSelectedRow]]) {
                 [self.tableView selectRowAtIndexPath:path animated:YES scrollPosition:UITableViewScrollPositionTop];
             }
-        }];
+        };
+        self.notificationObservers =
+        @[[[NSNotificationCenter defaultCenter] addObserverForName:ImageViewChangeNotification object:nil queue:nil usingBlock:selectBlock],
+          [[NSNotificationCenter defaultCenter] addObserverForName:AddImageNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+              [self.tableView reloadData];
+              selectBlock(note);
+          }]];
     }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self.notificationObserver];
+    for( id<NSObject> notificationObserver in self.notificationObservers) {
+        [[NSNotificationCenter defaultCenter] removeObserver:notificationObserver];
+    }
+    self.notificationObservers = nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

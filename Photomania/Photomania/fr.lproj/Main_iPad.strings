@@ -1,0 +1,42 @@
+
+/* Class = "IBUIBarButtonItem"; title = "URL"; ObjectID = "1v7-wb-Gtt"; */
+"1v7-wb-Gtt.title" = "URL";
+
+/* Class = "IBUILabel"; text = "Subtitle"; ObjectID = "2hh-Dn-jHf"; */
+"2hh-Dn-jHf.text" = "Subtitle";
+
+/* Class = "IBUINavigationItem"; title = "Photos"; ObjectID = "FJH-Wp-Umb"; */
+"FJH-Wp-Umb.title" = "Photos";
+
+/* Class = "IBUILabel"; text = "Subtitle"; ObjectID = "Gx0-kJ-Pdi"; */
+"Gx0-kJ-Pdi.text" = "Subtitle";
+
+/* Class = "IBUIButton"; normalTitle = "Take Photo"; ObjectID = "LEc-l3-MGf"; */
+"LEc-l3-MGf.normalTitle" = "Take Photo";
+
+/* Class = "IBUINavigationItem"; title = "Photographers"; ObjectID = "S0o-SV-0U6"; */
+"S0o-SV-0U6.title" = "Photographers";
+
+/* Class = "IBUIButton"; normalTitle = "Cancel"; ObjectID = "TKN-Un-igk"; */
+"TKN-Un-igk.normalTitle" = "Cancel";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "V1a-GU-i9T"; */
+"V1a-GU-i9T.text" = "Title";
+
+/* Class = "IBUINavigationController"; title = "Photographers"; ObjectID = "bdW-gX-2gK"; */
+"bdW-gX-2gK.title" = "Photographers";
+
+/* Class = "IBUILabel"; text = "Subtitle"; ObjectID = "lds-lN-zRv"; */
+"lds-lN-zRv.text" = "Subtitle";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "mxX-g8-rzf"; */
+"mxX-g8-rzf.text" = "Title";
+
+/* Class = "IBUISplitViewController"; title = "Photomania"; ObjectID = "tVJ-zQ-qmF"; */
+"tVJ-zQ-qmF.title" = "Photomania";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "vDe-FF-RMf"; */
+"vDe-FF-RMf.text" = "Title";
+
+/* Class = "IBUIButton"; normalTitle = "Done"; ObjectID = "yFG-x7-kR7"; */
+"yFG-x7-kR7.normalTitle" = "Done";

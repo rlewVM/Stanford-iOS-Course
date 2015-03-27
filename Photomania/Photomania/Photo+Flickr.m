@@ -30,14 +30,14 @@
     } else {
         photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:context];
         photo.unique_id = unique;
-        photo.title = [photoDictionary valueForKeyPath:FLICKR_PHOTO_TITLE];
+        photo.title = [photoDictionary valueForKey:FLICKR_PHOTO_TITLE];
         photo.subtitle = [photoDictionary valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
         photo.imageURL = [[FlickrFetcher URLforPhoto:photoDictionary format:FlickrPhotoFormatLarge] absoluteString];
-        photo.latitude = @([[photoDictionary valueForKeyPath:FLICKR_LATITUDE] doubleValue]);
-        photo.longitude = @([[photoDictionary valueForKeyPath:FLICKR_LONGITUDE] doubleValue]);
+        photo.latitude = @([[photoDictionary valueForKey:FLICKR_LATITUDE] doubleValue]);
+        photo.longitude = @([[photoDictionary valueForKey:FLICKR_LONGITUDE] doubleValue]);
         photo.thumbnailURL = [[FlickrFetcher URLforPhoto:photoDictionary format:FlickrPhotoFormatSquare] absoluteString];
         
-        NSString *photographerName = [photoDictionary valueForKeyPath:FLICKR_PHOTO_OWNER];
+        NSString *photographerName = [photoDictionary valueForKey:FLICKR_PHOTO_OWNER];
         photo.whoTook = [Photographer photograhperWithName:photographerName inManagedObjectContext:context];
     }
     
@@ -48,12 +48,12 @@
 + (void)loadPhotosFromFlickrArray:(NSArray *)photos intoManagedObjectContext:(NSManagedObjectContext *)context
 {
     NSMutableDictionary *owners = [NSMutableDictionary new];
-    NSLog(@"photos from flickr: %@", photos);
+    //NSLog(@"photos from flickr: %@", photos);
     for (NSDictionary *photo in photos) {
         [self photoWithFlickrInfo:photo inManagedObjectContext:context];
-        NSLog(@"photo: %@", photo);
+        //NSLog(@"photo: %@", photo);
         NSString *photographerName = [photo valueForKeyPath:FLICKR_PHOTO_OWNER];
-        NSUInteger count = [[owners valueForKey:photographerName] integerValue];
+        NSUInteger count = [[owners valueForKeyPath:photographerName] integerValue];
         if (count) {
             [owners setValue:@(count + 1) forKey:photographerName];
         } else {
@@ -62,8 +62,10 @@
     }
     
     for (NSString *key in owners) {
-        NSLog(@"photographer: %@ - %d photos", key, (int)[[owners valueForKey:key] integerValue]);
+        //NSLog(@"photographer: %@ - %d photos", key, (int)[[owners valueForKey:key] integerValue]);
     }
+    // TODO: Load photos from user
+    [Photographer getMyUserInManagedObjectContext:context];
 }
 
 @end

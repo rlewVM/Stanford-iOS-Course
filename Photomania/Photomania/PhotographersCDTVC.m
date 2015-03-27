@@ -32,7 +32,7 @@
     
     NSFetchRequest *fetchReq = [NSFetchRequest fetchRequestWithEntityName:@"Photographer"];
     fetchReq.predicate = nil;
-    fetchReq.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedStandardCompare:)]];
+    fetchReq.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"isUser" ascending:NO], [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedStandardCompare:)]];
     
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchReq managedObjectContext:self.context sectionNameKeyPath:nil cacheName:nil];
 }

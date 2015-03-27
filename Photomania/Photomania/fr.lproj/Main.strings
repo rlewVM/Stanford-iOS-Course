@@ -1,0 +1,21 @@
+
+/* Class = "IBUILabel"; text = "Subtitle"; ObjectID = "4dg-tK-ZvI"; */
+"4dg-tK-ZvI.text" = "S.u.b.t.i.t.l.e.";
+
+/* Class = "IBUIButton"; normalTitle = "Take Photo"; ObjectID = "CqL-wm-Kjz"; */
+"CqL-wm-Kjz.normalTitle" = "T.a.k.e. .P.h.o.t.o.";
+
+/* Class = "IBUINavigationController"; title = "Shutterbug"; ObjectID = "Dwh-e5-JFH"; */
+"Dwh-e5-JFH.title" = "S.h.u.t.t.e.r.b.u.g.";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "GkJ-IQ-psU"; */
+"GkJ-IQ-psU.text" = "T.i.t.l.e.";
+
+/* Class = "IBUIButton"; normalTitle = "Done"; ObjectID = "Iy3-In-8wA"; */
+"Iy3-In-8wA.normalTitle" = "D.o.n.e.";
+
+/* Class = "IBUINavigationItem"; title = "Photos"; ObjectID = "gss-eN-fHH"; */
+"gss-eN-fHH.title" = "P.h.o.t.o.s.";
+
+/* Class = "IBUIButton"; normalTitle = "Cancel"; ObjectID = "x5g-kZ-VSp"; */
+"x5g-kZ-VSp.normalTitle" = "C.a.n.c.e.l.";
